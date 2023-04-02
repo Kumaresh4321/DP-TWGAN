@@ -7,6 +7,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
+import xarray as xr
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -117,13 +118,15 @@ Testing the implementation of the generator and discriminator
 '''
 
 if __name__ == '__main__':
-	x = torch.randn((10,10,34))
+	x = torch.randn((10,10,24))
 	generator = GANGenerator(hidden_units)
 	output = generator.forward(x)	
 	test  = np.array(output.data)
-	pan = pd.Panel(test)
-	df = pan.swapaxes(0, 2).to_frame()
-	df.index = df.index.droplevel('minor')
+	# pan = pd.Panel(test)
+	pan = xr.DataArray(test)
+	pan.name = "hello"
+	df = pan.to_dataframe()
+	df.index = df.index.droplevel('dim_0')
 
 	# print df.head()
 

@@ -172,7 +172,7 @@ if __name__ == '__main__':
 	file = args.datapath + '/' + args.file
 	data = readData(file)
 
-	print len(data)/batch_size
+	# print len(data)/batch_size
 
 	network = Network(hidden_units)
 
@@ -191,7 +191,7 @@ if __name__ == '__main__':
 	pan = pd.Panel(generated_data)
 	generated_data = pan.swapaxes(0, 2).to_frame()
 	generated_data.index = generated_data.index.droplevel('minor')
-	print generated_data
+	# print generated_data
 	generated_data.to_csv('../data/generated_data_four_layer.csv',index = False)
 
 
